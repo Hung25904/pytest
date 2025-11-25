@@ -2,12 +2,13 @@ from flask import Flask, render_template_string
 
 app = Flask(__name__)
 
-# Dữ liệu thực đơn (Đã cập nhật ảnh Cơm Gà mới)
+# Dữ liệu thực đơn (Đã cập nhật ảnh Trà Sữa chuẩn xịn)
 MENU = [
     {"id": 1, "category": "main", "name": "Burger Bò Phô Mai", "price": 65000, "image": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=500&q=60", "desc": "Thịt bò nướng lửa hồng, phô mai cheddar tan chảy."},
     {"id": 2, "category": "noodle", "name": "Mì Ý Carbonara", "price": 80000, "image": "https://images.unsplash.com/photo-1612874742237-6526221588e3?auto=format&fit=crop&w=500&q=60", "desc": "Sốt kem béo ngậy, thịt xông khói giòn rụm."},
     {"id": 3, "category": "rice", "name": "Cơm Gà Teriyaki", "price": 55000, "image": "https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?auto=format&fit=crop&w=500&q=60", "desc": "Gà sốt Nhật Bản đậm đà, ăn kèm salad."}, 
-    {"id": 4, "category": "drink", "name": "Trà Sữa Trân Châu", "price": 35000, "image": "https://images.unsplash.com/photo-1556679343-c7306c1976bc?auto=format&fit=crop&w=500&q=60", "desc": "Đường đen, sữa tươi nguyên kem."},
+    # Đã đổi ảnh Trà Sữa sang ảnh trân châu đường đen
+    {"id": 4, "category": "drink", "name": "Trà Sữa Trân Châu", "price": 35000, "image": "https://images.unsplash.com/photo-1558855410-3112e253d755?auto=format&fit=crop&w=500&q=60", "desc": "Đường đen, sữa tươi nguyên kem."},
     {"id": 5, "category": "main", "name": "Pizza Pepperoni", "price": 120000, "image": "https://images.unsplash.com/photo-1628840042765-356cda07504e?auto=format&fit=crop&w=500&q=60", "desc": "Đế mỏng giòn, xúc xích cay nồng."},
     {"id": 6, "category": "drink", "name": "Nước Ép Cam", "price": 30000, "image": "https://images.unsplash.com/photo-1613478223719-2ab802602423?auto=format&fit=crop&w=500&q=60", "desc": "Cam vàng nguyên chất, bổ sung Vitamin C."},
     {"id": 7, "category": "noodle", "name": "Phở Bò Đặc Biệt", "price": 60000, "image": "https://images.unsplash.com/photo-1582878826629-29b7ad1cdc43?auto=format&fit=crop&w=500&q=60", "desc": "Hương vị truyền thống Việt Nam."},
@@ -21,10 +22,8 @@ HTML_TEMPLATE = """
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Foodie Express - Giao Đồ Ăn Nhanh</title>
-    <!-- Bootstrap 5 & Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Poppins', sans-serif; background-color: #f8f9fa; }
@@ -43,8 +42,6 @@ HTML_TEMPLATE = """
         .btn-add:hover { background-color: #ff6b81; color: white; }
         .nav-pills .nav-link.active { background-color: #2ed573; }
         .nav-pills .nav-link { color: #57606f; margin: 0 5px; border-radius: 50px; }
-        
-        /* Modal Styles */
         .cart-item-img { width: 50px; height: 50px; object-fit: cover; border-radius: 8px; }
         .total-price { font-size: 1.5rem; color: #ff4757; font-weight: bold; }
     </style>
@@ -91,7 +88,6 @@ HTML_TEMPLATE = """
                             <div class="d-flex justify-content-between align-items-center mb-3">
                                 <span class="price-tag">{{ "{:,.0f}".format(item.price).replace(',', '.') }} đ</span>
                             </div>
-                            <!-- Truyền đầy đủ thông tin món ăn vào hàm addToCart -->
                             <button class="btn btn-add" onclick="addToCart({{ item.id }}, '{{ item.name }}', {{ item.price }}, '{{ item.image }}')">
                                 <i class="bi bi-plus-circle"></i> Thêm món
                             </button>
@@ -116,7 +112,6 @@ HTML_TEMPLATE = """
                         <i class="bi bi-cart-x" style="font-size: 3rem;"></i>
                         <p class="mt-2">Giỏ hàng đang trống trơn!</p>
                     </div>
-                    <!-- Danh sách món ăn sẽ được render vào đây -->
                     <div id="cart-items-container" style="display: none;">
                         <table class="table align-middle">
                             <tbody id="cart-table-body"></tbody>
@@ -137,6 +132,20 @@ HTML_TEMPLATE = """
         </div>
     </div>
 
+    <!-- SUCCESS MODAL (Thông báo thành công MỚI - Đẹp hơn alert) -->
+    <div class="modal fade" id="successModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content text-center p-4">
+                <div class="mb-3">
+                    <i class="bi bi-check-circle-fill text-success" style="font-size: 4rem;"></i>
+                </div>
+                <h3 class="fw-bold mb-3">Đặt hàng thành công!</h3>
+                <p class="text-muted mb-4" id="success-msg">Cảm ơn bạn đã đặt món tại Foodie Express.</p>
+                <button type="button" class="btn btn-success w-100 rounded-pill py-2 fw-bold" data-bs-dismiss="modal">OK, Tuyệt vời</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Toast Notification -->
     <div class="toast-container position-fixed bottom-0 end-0 p-3">
         <div id="liveToast" class="toast align-items-center text-white bg-success border-0" role="alert">
@@ -151,26 +160,20 @@ HTML_TEMPLATE = """
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Mảng lưu trữ các món đã chọn
         let cart = [];
         const toastEl = document.getElementById('liveToast');
         const toast = new bootstrap.Toast(toastEl);
+        // Tạo đối tượng Modal cho thông báo thành công
+        const successModal = new bootstrap.Modal(document.getElementById('successModal'));
 
-        // Hàm thêm vào giỏ hàng
         function addToCart(id, name, price, image) {
-            // Kiểm tra xem món này đã có trong giỏ chưa
             const existingItem = cart.find(item => item.id === id);
-            
             if (existingItem) {
                 existingItem.quantity += 1;
             } else {
                 cart.push({ id: id, name: name, price: price, image: image, quantity: 1 });
             }
-
-            // Cập nhật số lượng trên icon giỏ hàng
             updateCartCount();
-            
-            // Hiện thông báo
             toast.show();
         }
 
@@ -179,7 +182,6 @@ HTML_TEMPLATE = """
             document.getElementById('cart-count').innerText = totalCount;
         }
 
-        // Hàm hiển thị chi tiết giỏ hàng (khi mở Modal)
         function renderCart() {
             const container = document.getElementById('cart-items-container');
             const emptyMsg = document.getElementById('cart-empty-msg');
@@ -199,11 +201,9 @@ HTML_TEMPLATE = """
             tbody.innerHTML = '';
             
             let total = 0;
-
             cart.forEach((item, index) => {
                 const itemTotal = item.price * item.quantity;
                 total += itemTotal;
-                
                 const row = `
                     <tr>
                         <td style="width: 60px;"><img src="${item.image}" class="cart-item-img"></td>
@@ -218,56 +218,51 @@ HTML_TEMPLATE = """
                                 <button class="btn btn-outline-secondary" onclick="changeQty(${index}, 1)">+</button>
                             </div>
                         </td>
-                        <td class="text-end fw-bold" style="width: 100px;">
-                            ${itemTotal.toLocaleString('vi-VN')} đ
-                        </td>
+                        <td class="text-end fw-bold" style="width: 100px;">${itemTotal.toLocaleString('vi-VN')} đ</td>
                         <td style="width: 40px;" class="text-end">
                             <button class="btn btn-sm text-danger" onclick="removeItem(${index})"><i class="bi bi-trash"></i></button>
                         </td>
-                    </tr>
-                `;
+                    </tr>`;
                 tbody.innerHTML += row;
             });
-
             document.getElementById('cart-total').innerText = total.toLocaleString('vi-VN') + ' đ';
         }
 
-        // Hàm thay đổi số lượng trong giỏ
         function changeQty(index, delta) {
             cart[index].quantity += delta;
-            if (cart[index].quantity <= 0) {
-                cart.splice(index, 1);
-            }
+            if (cart[index].quantity <= 0) { cart.splice(index, 1); }
             updateCartCount();
-            renderCart(); // Vẽ lại bảng
+            renderCart();
         }
 
-        // Hàm xóa hẳn món khỏi giỏ
         function removeItem(index) {
             cart.splice(index, 1);
             updateCartCount();
             renderCart();
         }
 
-        // Hàm thanh toán (Giả lập)
+        // Hàm thanh toán MỚI: Dùng Modal đẹp thay vì Alert
         function checkout() {
             const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
             const totalStr = total.toLocaleString('vi-VN') + ' đ';
             
-            // Tắt Modal
-            const modalEl = document.getElementById('cartModal');
-            const modal = bootstrap.Modal.getInstance(modalEl);
-            modal.hide();
+            // 1. Ẩn Giỏ hàng
+            const cartModalEl = document.getElementById('cartModal');
+            const cartModalInstance = bootstrap.Modal.getInstance(cartModalEl);
+            cartModalInstance.hide();
 
-            // Hiện thông báo thanh toán thành công
-            alert(`🎉 Cảm ơn Bệ hạ!\n\nĐơn hàng trị giá ${totalStr} đang được Ngự Thiện Phòng chuẩn bị.\nNgựa chiến sẽ giao tới ngay lập tức!`);
+            // 2. Cập nhật nội dung thông báo thành công
+            document.getElementById('success-msg').innerText = `Đơn hàng trị giá ${totalStr} của bạn đã được xác nhận. Bếp đang chuẩn bị món!`;
+
+            // 3. Hiện Modal Thành công (Không còn dòng chữ lằng ngoằng ở tiêu đề nữa!)
+            successModal.show();
             
-            // Xóa giỏ hàng sau khi mua
+            // 4. Xóa giỏ hàng
             cart = [];
             updateCartCount();
         }
 
-        // Logic Lọc món ăn
+        // Logic Lọc
         const filterButtons = document.querySelectorAll('.nav-link[data-filter]');
         const items = document.querySelectorAll('.filter-item');
         filterButtons.forEach(button => {
@@ -278,9 +273,7 @@ HTML_TEMPLATE = """
                 items.forEach(item => {
                     if (category === 'all' || item.getAttribute('data-category') === category) {
                         item.style.display = 'block';
-                    } else {
-                        item.style.display = 'none';
-                    }
+                    } else { item.style.display = 'none'; }
                 });
             });
         });
