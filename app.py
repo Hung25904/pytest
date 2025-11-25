@@ -7,8 +7,7 @@ MENU = [
     {"id": 1, "category": "main", "name": "Burger Bò Phô Mai", "price": 65000, "image": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=500&q=60", "desc": "Thịt bò nướng lửa hồng, phô mai cheddar tan chảy."},
     {"id": 2, "category": "noodle", "name": "Mì Ý Carbonara", "price": 80000, "image": "https://images.unsplash.com/photo-1612874742237-6526221588e3?auto=format&fit=crop&w=500&q=60", "desc": "Sốt kem béo ngậy, thịt xông khói giòn rụm."},
     {"id": 3, "category": "rice", "name": "Cơm Gà Teriyaki", "price": 55000, "image": "https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?auto=format&fit=crop&w=500&q=60", "desc": "Gà sốt Nhật Bản đậm đà, ăn kèm salad."}, 
-    # Đã đổi ảnh Trà Sữa sang ảnh trân châu đường đen
-    {"id": 4, "category": "drink", "name": "Trà Sữa Trân Châu", "price": 35000, "image": "https://images.unsplash.com/photo-1558855410-3112e253d755?auto=format&fit=crop&w=500&q=60", "desc": "Đường đen, sữa tươi nguyên kem."},
+    {"id": 4, "category": "drink", "name": "Trà Chanh", "price": 15000, "image": "https://images.unsplash.com/photo-1556679343-c7306c1976bc?auto=format&fit=crop&w=500&q=60", "desc": "Giải khát mùa hè, thanh mát sảng khoái."},
     {"id": 5, "category": "main", "name": "Pizza Pepperoni", "price": 120000, "image": "https://images.unsplash.com/photo-1628840042765-356cda07504e?auto=format&fit=crop&w=500&q=60", "desc": "Đế mỏng giòn, xúc xích cay nồng."},
     {"id": 6, "category": "drink", "name": "Nước Ép Cam", "price": 30000, "image": "https://images.unsplash.com/photo-1613478223719-2ab802602423?auto=format&fit=crop&w=500&q=60", "desc": "Cam vàng nguyên chất, bổ sung Vitamin C."},
     {"id": 7, "category": "noodle", "name": "Phở Bò Đặc Biệt", "price": 60000, "image": "https://images.unsplash.com/photo-1582878826629-29b7ad1cdc43?auto=format&fit=crop&w=500&q=60", "desc": "Hương vị truyền thống Việt Nam."},
@@ -287,4 +286,5 @@ def home():
     return render_template_string(HTML_TEMPLATE, menu=MENU)
 
 if __name__ == '__main__':
+
     app.run(debug=True)
