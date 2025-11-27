@@ -11,7 +11,7 @@ MENU = [
     {"id": 5, "category": "main", "name": "Pizza Pepperoni", "price": 120000, "image": "https://images.unsplash.com/photo-1628840042765-356cda07504e?auto=format&fit=crop&w=500&q=60", "desc": "Đế mỏng giòn, xúc xích cay nồng."},
     {"id": 6, "category": "drink", "name": "Nước ép Cam", "price": 30000, "image": "https://images.unsplash.com/photo-1613478223719-2ab802602423?auto=format&fit=crop&w=500&q=60", "desc": "Cam vàng nguyên chất, bổ sung Vitamin C."},
     {"id": 7, "category": "noodle", "name": "Phở Bò đặc biệt", "price": 60000, "image": "https://images.unsplash.com/photo-1582878826629-29b7ad1cdc43?auto=format&fit=crop&w=500&q=60", "desc": "Hương vị truyền thống Việt Nam."},
-    {"id": 8, "category": "rice", "name": "Cơm Hải sản Dặc biệt", "price": 50000, "image": "https://images.unsplash.com/photo-1563379926898-05f4575a45d8?auto=format&fit=crop&w=500&q=60", "desc": "Hương vị đậm đà, thơm lừng từng hạt cơm"}
+    {"id": 8, "category": "rice", "name": "Cơm Hải sản Dặc biệt", "price": 50000, "image": "https://images.unsplash.com/photo-1512058564366-18510be2db19?auto=format&fit=crop&w=500&q=60", "desc": "Hương vị đậm đà, thơm lừng từng hạt cơm"}
 ]
 
 HTML_TEMPLATE = """
@@ -288,4 +288,5 @@ def home():
 if __name__ == '__main__':
 
     app.run(debug=True)
+
 
