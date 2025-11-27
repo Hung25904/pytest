@@ -4,14 +4,14 @@ app = Flask(__name__)
 
 # Dữ liệu thực đơn (Đã cập nhật ảnh Trà Sữa chuẩn xịn)
 MENU = [
-    {"id": 1, "category": "main", "name": "Burger Bò Phô Mai", "price": 65000, "image": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=500&q=60", "desc": "Thịt bò nướng lửa hồng, phô mai cheddar tan chảy."},
+    {"id": 1, "category": "main", "name": "Burger Bò Phô mai", "price": 65000, "image": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=500&q=60", "desc": "Thịt bò nướng lửa hồng, phô mai cheddar tan chảy."},
     {"id": 2, "category": "noodle", "name": "Mì Ý Carbonara", "price": 80000, "image": "https://images.unsplash.com/photo-1612874742237-6526221588e3?auto=format&fit=crop&w=500&q=60", "desc": "Sốt kem béo ngậy, thịt xông khói giòn rụm."},
-    {"id": 3, "category": "rice", "name": "Cơm Gà Teriyaki", "price": 55000, "image": "https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?auto=format&fit=crop&w=500&q=60", "desc": "Gà sốt Nhật Bản đậm đà, ăn kèm salad."}, 
+    {"id": 3, "category": "rice", "name": "Cơm gà Teriyaki", "price": 55000, "image": "https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?auto=format&fit=crop&w=500&q=60", "desc": "Gà sốt Nhật Bản đậm đà, ăn kèm salad."}, 
     {"id": 4, "category": "drink", "name": "Trà Chanh", "price": 15000, "image": "https://images.unsplash.com/photo-1556679343-c7306c1976bc?auto=format&fit=crop&w=500&q=60", "desc": "Giải khát mùa hè, thanh mát sảng khoái."},
     {"id": 5, "category": "main", "name": "Pizza Pepperoni", "price": 120000, "image": "https://images.unsplash.com/photo-1628840042765-356cda07504e?auto=format&fit=crop&w=500&q=60", "desc": "Đế mỏng giòn, xúc xích cay nồng."},
-    {"id": 6, "category": "drink", "name": "Nước Ép Cam", "price": 30000, "image": "https://images.unsplash.com/photo-1613478223719-2ab802602423?auto=format&fit=crop&w=500&q=60", "desc": "Cam vàng nguyên chất, bổ sung Vitamin C."},
-    {"id": 7, "category": "noodle", "name": "Phở Bò Đặc Biệt", "price": 60000, "image": "https://images.unsplash.com/photo-1582878826629-29b7ad1cdc43?auto=format&fit=crop&w=500&q=60", "desc": "Hương vị truyền thống Việt Nam."},
-    {"id": 8, "category": "rice", "name": "Cơm Sườn Bì Chả", "price": 50000, "image": "https://images.unsplash.com/photo-1563379926898-05f4575a45d8?auto=format&fit=crop&w=500&q=60", "desc": "Sài Gòn đặc biệt, nước mắm kẹo."}
+    {"id": 6, "category": "drink", "name": "Nước ép Cam", "price": 30000, "image": "https://images.unsplash.com/photo-1613478223719-2ab802602423?auto=format&fit=crop&w=500&q=60", "desc": "Cam vàng nguyên chất, bổ sung Vitamin C."},
+    {"id": 7, "category": "noodle", "name": "Phở Bò đặc biệt", "price": 60000, "image": "https://images.unsplash.com/photo-1582878826629-29b7ad1cdc43?auto=format&fit=crop&w=500&q=60", "desc": "Hương vị truyền thống Việt Nam."},
+    {"id": 8, "category": "rice", "name": "Cơm Hải sản Dặc biệt", "price": 50000, "image": "https://images.unsplash.com/photo-1563379926898-05f4575a45d8?auto=format&fit=crop&w=500&q=60", "desc": "Hương vị đậm đà, thơm lừng từng hạt cơm"}
 ]
 
 HTML_TEMPLATE = """
@@ -288,3 +288,4 @@ def home():
 if __name__ == '__main__':
 
     app.run(debug=True)
+
